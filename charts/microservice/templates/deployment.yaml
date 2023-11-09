@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}
+spec:
+  replicas: {{ .Values.appReplicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}
+    spec:
+      containers:
+      - name: {{ .Values.appName }}
+        image: "{{ .Values.appImage }}:{{ .Values.appVersion }}"
+        ports:
+        - containerPort: {{ .Values.containerPort }}
+        env:
+        {{- range .Values.containerEnvVars}}
+        - name: {{ .name }}
+          value: {{ .value | quote }}
+        {{- end}}
+        readinessProbe:
+          initialDelaySeconds: {{ .Values.initialDelaySeconds }}
+          periodSeconds: {{ .Values.readinessProbePeriodSeconds }}
+          grpc:
+            port: {{ .Values.grpcPort }}
+        livenessProbe:
+          initialDelaySeconds: {{ .Values.initialDelaySeconds }}
+          periodSeconds: {{ .Values.livenessProbePeriodSeconds }}
+          grpc:
+            port: {{ .Values.grpcPort }}
+        resources:
+          requests:
+            memory: {{ .Values.requestsMemory }}
+            cpu: {{ .Values.requestsCPU }}
+          limits:
+            memory: {{ .Values.limitsMemory }}
+            cpu: {{ .Values.limitsCPU }}

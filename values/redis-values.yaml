@@ -1,0 +1,10 @@
+appName: redis-cart
+appReplicas: 2
+
+readinessProbePeriodSeconds: 5
+tcpSocketPort: 6379
+livenessProbePeriodSeconds: 5
+limitsMemory: 256Mi
+limitsCPU: 125m
+requestsCPU: 70m
+requestsMemory: 200Mi

@@ -1,0 +1,25 @@
+appName: currencyservice
+appImage: gcr.io/google-samples/microservices-demo/currencyservice
+appVersion: v0.8.1
+appReplicas: 2
+containerPort:  7000
+containerEnvVars:
+- name: PORT
+  value: "7000"
+- name: DISABLE_TRACING
+  value: "1"
+- name: DISABLE_PROFILER
+  value: "1"
+
+servicePort: 7000
+
+readinessProbePeriodSeconds: 0
+initialDelaySeconds: 0
+grpcPort: 7000
+livenessProbePeriodSeconds: 0
+limitsMemory: 128Mi
+limitsCPU: 200m
+requestsCPU: 100m
+requestsMemory: 64Mi
+
+

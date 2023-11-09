@@ -1,0 +1,20 @@
+appName: adservice
+appImage: gcr.io/google-samples/microservices-demo/adservice
+appVersion: v0.8.1
+appReplicas: 2
+containerPort: 9555
+containerEnvVars:
+- name: PORT
+  value: "9555"
+
+servicePort: 9555
+
+readinessProbePeriodSeconds: 15
+initialDelaySeconds: 20
+grpcPort: 9555
+livenessProbePeriodSeconds: 15
+limitsMemory: 300Mi
+limitsCPU: 300m
+requestsCPU: 200m
+requestsMemory: 180Mi
+

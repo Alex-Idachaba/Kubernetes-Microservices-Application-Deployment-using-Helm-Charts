@@ -1,0 +1,25 @@
+appName: paymentservice
+appImage: gcr.io/google-samples/microservices-demo/paymentservice
+appVersion: v0.8.1
+appReplicas: 2
+containerPort: 50051
+containerEnvVars:
+- name: PORT
+  value: "50051"
+- name: DISABLE_TRACING
+  value: "1"
+- name: DISABLE_PROFILER
+  value: "1"
+
+servicePort: 50051
+
+readinessProbePeriodSeconds: 0
+initialDelaySeconds: 0
+grpcPort: 50051
+livenessProbePeriodSeconds: 0
+limitsMemory: 128Mi
+limitsCPU: 200m
+requestsCPU: 100m
+requestsMemory: 64Mi
+
+

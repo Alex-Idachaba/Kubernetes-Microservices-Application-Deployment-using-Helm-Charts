@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}
+spec:
+  replicas: {{ .Values.appReplicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}
+      annotations:
+        sidecar.istio.io/rewriteAppHTTPProbers: {{ .Values.rewriteAppHTTPProbers }}
+    spec:
+      containers:
+        - name: {{ .Values.appName }}
+          image: "{{ .Values.appImage }}:{{ .Values.appVersion }}"
+          ports:
+          - containerPort: {{ .Values.containerPort }}
+          readinessProbe:
+            initialDelaySeconds: {{ .Values.initialDelaySeconds }}
+            httpGet:
+              path: {{ .Values.httpGetPath }}
+              port: {{ .Values.httpGetPort }}
+              httpHeaders:
+              - name: {{ .Values.httpHeadersName }}
+                value: {{ .Values.httpHeadersValue }}
+          livenessProbe:
+            initialDelaySeconds: {{ .Values.initialDelaySeconds }}
+            httpGet:
+              path: {{ .Values.httpGetPath }}
+              port: {{ .Values.httpGetPort }}
+              httpHeaders:
+              - name: {{ .Values.httpHeadersName }}
+                value: {{ .Values.httpHeadersValue }}
+          env:
+          {{- range .Values.containerEnvVars}}
+          - name: {{ .name }}
+            value: {{ .value | quote }}
+          {{- end}}
+          resources:
+            requests:
+              memory: {{ .Values.requestsMemory }}
+              cpu: {{ .Values.requestsCPU }}
+            limits:
+              memory: {{ .Values.limitsMemory }}
+              cpu: {{ .Values.limitsCPU }}
