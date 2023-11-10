@@ -1,5 +1,4 @@
 appName: frontend
-rewriteAppHTTPProbers: "true"
 appImage: gcr.io/google-samples/microservices-demo/frontend
 appVersion: v0.8.1
 appReplicas: 2

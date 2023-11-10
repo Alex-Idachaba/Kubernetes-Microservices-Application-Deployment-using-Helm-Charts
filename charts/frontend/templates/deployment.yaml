@@ -11,8 +11,6 @@ spec:
     metadata:
       labels:
         app: {{ .Values.appName }}
-      annotations:
-        sidecar.istio.io/rewriteAppHTTPProbers: {{ .Values.rewriteAppHTTPProbers }}
     spec:
       containers:
         - name: {{ .Values.appName }}
